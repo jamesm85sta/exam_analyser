@@ -1,0 +1,59 @@
+/* style.css */
+
+/* Main Page Background and Font */
+.stApp {
+    background-color: #f4f7f9;
+    font-family: 'Times New Roman', serif; /* Traditional academic feel */
+}
+
+/* Centralize and pad the form container */
+.block-container {
+    max-width: 900px;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
+
+/* Repton Blue Headers */
+h1, h2, h3 {
+    color: #002147; /* Oxford/Navy Blue */
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Style the Question Containers */
+div.stVerticalBlock > div[style*="border"] {
+    background-color: #ffffff;
+    border: 2px solid #002147 !important;
+    border-radius: 15px;
+    padding: 30px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Make Question Parts larger and clearer */
+.stMarkdown p {
+    font-size: 1.2rem !important;
+    color: #333333;
+}
+
+/* Style the Radio Buttons (Mark Selection) */
+div[data-baseweb="radio"] label {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #002147 !important;
+}
+
+/* Customize the Buttons */
+button[kind="primary"] {
+    background-color: #002147 !important;
+    color: white !important;
+    border-radius: 5px !important;
+    border: none !important;
+    padding: 0.5rem 2rem !important;
+    font-weight: bold !important;
+}
+
+button[kind="secondary"] {
+    border: 1px solid #002147 !important;
+    color: #002147 !important;
+    background-color: transparent !important;
+}
