@@ -66,12 +66,14 @@ class question_part:
     def parse_json(self,data):
         for k, v in data.items():
             if isinstance(v,dict) and "marks" in v:
-                qp= question_part(k,v["marks"],v["categories"])
+                qp = question_part(k, v["marks"], v.get("categories", []))                
                 self.add_subpart(qp)
             elif isinstance(v,dict):
                 qp = question_part(k)
                 qp.parse_json(v)
                 self.add_subpart(qp)
+            else:
+                raise Exception("non-dictionary item in json parser")
 
     def print_question(self, level =0):
         if self.marks is not None:

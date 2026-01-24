@@ -1,25 +1,32 @@
-{"1":
-    {
-        "a":
-        {
-            "i":
-            {"marks":3,"categories":["Year 1","Fields"]}, 
-            "ii":
-            {"marks":1,"categories":["Year 1","Mechanics"]}
-         },
-        "b":{"marks":3,"categories":["Year 1","Fields"]},
-        "c":{"marks":2,"categories":["Year 1","Electricity"]}
+{
+  "1": {
+    "a": {
+      "i": { "marks": 2, "categories": ["Year 1", "Describe/Explain", "Mechanics"] },
+      "ii": { "marks": 4, "categories": ["Year 1", "Calculation", "Mechanics"] }
     },
-"2":
-    {
-        "a":{"marks":2,"categories":["Year 1","Waves"]},
-   
-        "b" : {"marks":3,"categories":["Year 1","Mechanics"]},
-        "c":     {
-            "i":
-            {"marks":3,"categories":["Year 1","Waves"]}, 
-            "ii":
-            {"marks":1,"categories":["Year 1","Electricity"]}
-         }
+    "b": { "marks": 5, "categories": ["Year 2", "Calculation", "Mechanics"] },
+    "c": { "marks": 1, "categories": ["Year 1", "Multiple Choice", "Mechanics"] }
+  },
+  "2": {
+    "a": { "marks": 3, "categories": ["Year 1", "Describe/Explain", "Waves"] },
+    "b": {
+      "i": { "marks": 2, "categories": ["Year 1", "Diagram", "Waves"] },
+      "ii": {
+        "alpha": { "marks": 1, "categories": ["Year 2", "Multiple Choice", "Waves"] },
+        "beta": { "marks": 2, "categories": ["Year 2", "Calculation", "Waves"] }
+      }
     }
+  },
+  "3": {
+    "a": { "marks": 6, "categories": ["Year 2", "Calculation", "Electricity"] },
+    "b": { "marks": 2, "categories": ["Year 1", "Calculation", "Electricity"] }
+  },
+  "4": {
+    "a": {
+      "i": {
+        "x": { "marks": 1, "categories": ["Year 2", "Multiple Choice", "Nuclear"] },
+        "y": { "marks": 1, "categories": ["Year 2", "Describe/Explain", "Nuclear"] }
+      }
+    }
+  }
 }

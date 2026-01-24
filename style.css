@@ -1,59 +1,83 @@
 /* style.css */
 
-/* Main Page Background and Font */
+/* 1. The 'Desk' (Outer Margins) */
 .stApp {
-    background-color: #f4f7f9;
-    font-family: 'Times New Roman', serif; /* Traditional academic feel */
+    background-color: #cbd5e1 !important; /* Steel grey-blue */
 }
 
-/* Centralize and pad the form container */
 .block-container {
-    max-width: 900px;
-    padding-top: 3rem;
-    padding-bottom: 5rem;
+    background-color: #ffffff !important;
+    max-width: 800px !important;
+    padding: 50px 80px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px !important; /* Sharp corners */
+    margin-top: 30px;
 }
 
-/* Repton Blue Headers */
-h1, h2, h3 {
-    color: #002147; /* Oxford/Navy Blue */
-    font-weight: 700;
+
+/* 3. Repton Blue Header Polish */
+h1 {
+    color: #002147;
+    border-bottom: 3px solid #002147;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-/* Style the Question Containers */
-div.stVerticalBlock > div[style*="border"] {
-    background-color: #ffffff;
-    border: 2px solid #002147 !important;
-    border-radius: 15px;
-    padding: 30px !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* 4. Question Hierarchy Fixes */
+h2 {
+    color: #002147;
+    font-size: 2rem !important;
+    margin-top: 2rem;
 }
 
-/* Make Question Parts larger and clearer */
-.stMarkdown p {
+/* 3. Section Headers (a, b, c) */
+h3 {
+    color: #002147;
+    font-family: 'Times New Roman', serif;
     font-size: 1.2rem !important;
-    color: #333333;
+    border-bottom: 2px solid #e2e8f0;
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
 }
 
-/* Style the Radio Buttons (Mark Selection) */
-div[data-baseweb="radio"] label {
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
-    color: #002147 !important;
+/* Container for the question content */
+[data-testid="stVerticalBlockBorderWrapper"] > div {
+    border: none !important; /* Remove the inner box, let the 'Paper' be the box */
+    padding: 0px !important;
 }
 
-/* Customize the Buttons */
-button[kind="primary"] {
+/* Indentation for sub-parts to create hierarchy */
+.sub-part-indent {
+    margin-left: 40px;
+    border-left: 1px solid #e2e8f0;
+    padding-left: 20px;
+}
+
+.sub-part-line {
+    border-bottom: 1px solid #f1f5f9;
+    margin: 10px 0px;
+}
+
+/* Restore Input Visibility */
+.stTextInput input, .stSelectbox div[data-baseweb="select"] {
+    border: 2px solid #002147 !important; /* Repton Blue */
+    border-radius: 8px !important; /* Sharp corners */
+    background-color: #ffffff !important;
+}
+/* Subtle Horizontal Rule between sub-questions */
+.question-separator {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+}
+
+.sub-item-rule {
+    border-bottom: 1px solid #e2e8f0;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+div[data-baseweb="radio"] label div {
     background-color: #002147 !important;
-    color: white !important;
-    border-radius: 5px !important;
-    border: none !important;
-    padding: 0.5rem 2rem !important;
-    font-weight: bold !important;
-}
-
-button[kind="secondary"] {
-    border: 1px solid #002147 !important;
-    color: #002147 !important;
-    background-color: transparent !important;
 }
