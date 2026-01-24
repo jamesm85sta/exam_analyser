@@ -1,5 +1,9 @@
 import streamlit as st
 
+import json
+import os
+from datetime import datetime
+
 classes = ["O1","O2","O3","O4","O5"]
 
 def local_css(file_name):
@@ -13,7 +17,6 @@ def previous_step():
     st.session_state.step -= 1
 
 def display_questions(step, paper):
-
     question = paper.get_question(step)
     st.markdown(
        f"## Question {question.identifier}"
@@ -21,11 +24,7 @@ def display_questions(step, paper):
     with st.container(border=True):
         display_question_parts(question)
 
-def save_mark(key):
-    st.session_state.results[key] = st.session_state[key]
-
 def display_question_parts(question, prefix="mark",level=0):
-
     current_prefix = f"{prefix}_{question.identifier}"
 
     for index, item in enumerate(question._subparts):
@@ -41,8 +40,10 @@ def display_question_parts(question, prefix="mark",level=0):
                         st.markdown(f"**{item.identifier})**")
                 with col2:
                     res_key = f"{current_prefix}_{item.identifier}"
-                    if res_key not in st.session_state.results:
+                    #initialise the result key if it doesn't exist
+                    if res_key not in st.session_state.results: 
                         st.session_state.results[res_key] = 0
+
                     saved_value = st.session_state.results.get(res_key, 0)
                     options = list(range(item.marks + 1))
                     try:
@@ -50,16 +51,16 @@ def display_question_parts(question, prefix="mark",level=0):
                     except ValueError:
                         print("ValueError")
                         current_index = 0
-                    st.radio(
+                    choice = st.radio(
                         "Marks", 
                         options = options, 
                         horizontal=True, 
                         key=res_key, 
                         label_visibility="collapsed",
                         index=current_index,
-                        on_change=save_mark,
-                        args=(res_key,)
+                        disabled=st.session_state.submitted
                         )
+                    st.session_state.results[res_key] = choice
                 st.markdown('<div class="sub-part-line"></div>', unsafe_allow_html=True)
 
 
@@ -74,18 +75,20 @@ def Create_form(paper):
 
     if 'submitted' not in st.session_state:
         st.session_state.submitted = False
+    
+    if st.session_state.submitted and st.session_state.step == paper.get_length():
+        st.balloons()
+    
 
     with st.container():
         if st.session_state.step ==0:
             class_index=None
             if st.session_state.results.get('class'):
                 class_index = classes.index(st.session_state.results.get('class'))
-            print(st.session_state.get('class'))
-            print(class_index)
             st.title(f"{paper.identifier}")
             st.markdown("---")
-            std_name = st.text_input("Full Name:",value =st.session_state.results.get('name')  )
-            std_class = st.selectbox ("class", options = classes,index = class_index )
+            std_name = st.text_input("Full Name:",value =st.session_state.results.get('name') ,disabled=st.session_state.submitted )
+            std_class = st.selectbox ("class", options = classes,index = class_index , disabled=st.session_state.submitted)
 
         if 0 <= st.session_state.step <= paper.get_length()-1:
             st.markdown(
@@ -98,7 +101,6 @@ def Create_form(paper):
         if 0 == st.session_state.step:
             col1, col2, col3 = st.columns([1,2,1])
             with col3:
-                # Determine if we are on the last question
                 if st.button( "Next ➡", type="primary"):
                     if std_name and std_class:
                         st.session_state.results['name'] = std_name
@@ -113,19 +115,14 @@ def Create_form(paper):
             col1, col2, col3 = st.columns([1,2,1])
             with col1:
                 if st.button("⬅ Back"):
-                    st.session_state.step -= 1
+                    previous_step()
                     st.rerun()
             with col3:
-                # Determine if we are on the last question
-                is_last = st.session_state.step == len(paper._questions)
                 if st.button("Next ➡", type="primary"):
-                    st.session_state.step += 1
+                    next_step()
                     st.rerun()
 
 
-
-
-        # --- FINAL STEP: Submit ---
         if st.session_state.step == paper.get_length():
             st.title("Review & Submit")
             st.write(f"Name: {st.session_state.results.get('name')}")
@@ -133,15 +130,39 @@ def Create_form(paper):
             col1, col2, col3 = st.columns([1,2,1])
             with col1:
                 if st.button("⬅ Back"):
-                    st.session_state.step -= 1
+                    previous_step()
+                    st.rerun()
+
             with col3:
                 if st.button("Submit", disabled=st.session_state.submitted):
                 # This is where you would call your SQL/SharePoint save function
+
                     st.session_state.submitted = True
+                    saved_path = save_submission(paper.identifier,st.session_state.results)
+                    
                     st.success("Results submitted successfully!")
-                    st.balloons()
                     st.rerun()
 
 
-     
+def save_submission(paper_id, data):
+    # Create a results folder if it doesn't exist
+    path =f"results/{paper_id}/raw"
+    if not os.path.exists(path):
+        os.makedirs(path)
+    
+    # Structure the final record
+    record = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "paper_id": paper_id,
+        "student_name": data.get('name', 'Unknown'),
+        "student_class": data.get('class', 'Unknown'),
+        "marks": {key: data[key] for key in data if "mark_" in key }
+    }
+    filename = f"{record['student_class']}_{record['student_name']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    filepath = os.path.join(path, filename)
+    
+    with open(filepath, "w") as f:
+        json.dump(record, f, indent=4)
+    
+    return filepath    
 

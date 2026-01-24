@@ -1,0 +1,20 @@
+{
+    "timestamp": "2026-01-24 22:34:38",
+    "paper_id": "phy_mock_2025",
+    "student_name": "afaf",
+    "student_class": "O3",
+    "marks": {
+        "mark_1_a_i": 0,
+        "mark_1_a_ii": 0,
+        "mark_1_b": 5,
+        "mark_1_c": 0,
+        "mark_2_a": 0,
+        "mark_2_b_i": 0,
+        "mark_2_b_ii_alpha": 0,
+        "mark_2_b_ii_beta": 0,
+        "mark_3_a": 0,
+        "mark_3_b": 0,
+        "mark_4_a_i_x": 0,
+        "mark_4_a_i_y": 0
+    }
+}
