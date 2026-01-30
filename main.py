@@ -8,9 +8,6 @@ def main():
     Create_form(EP1)
 
 
-
-
-
 if __name__ == "__main__":
     main()
 
